@@ -1,0 +1,18 @@
+{
+    "name": "com.example.smart",
+    "version": "0.0.167",
+    "description": "",
+    "main": "main.js",
+    "scripts": {
+        "build": "eos build"
+    },
+    "license": "MIT",
+    "dependencies": {},
+    "devDependencies": {
+        "@edgeros/eslint-plugin-jsre": "^0.0.3",
+        "@edgeros/jsre-types": "^0.1.1",
+        "eslint": "^7.23.0",
+        "eslint-config-standard": "^16.0.3"
+    },
+    "author": ""
+}

@@ -1,0 +1,43 @@
+{
+    "name": "智慧精灵",
+    "bundleid": "com.example.smart",
+    "ignore_modules": [
+        "@edgeros/eslint-plugin-jsre",
+        "@edgeros/jsre-types"
+    ],
+    "ignore_path": [
+        "./test/**",
+        "./temp/**",
+        "./ui/**"
+    ],
+    "assets": {
+        "ico_big": "assets/big.png",
+        "ico_small": "assets/small.png",
+        "splash": "assets/splash.png"
+    },
+    "program": {
+        "gss": false,
+        "log": "file",
+        "will": false,
+        "reside": false,
+        "mesv": "1.0.6",
+        "experimental": true
+    },
+    "loading": {
+        "splash": "splash",
+        "background": "#000000",
+        "animation": "enlarge"
+    },
+    "vendor": {
+        "id": "239992",
+        "name": "fuwenhao",
+        "email": "fuwenhao@acoinfo.com",
+        "phone": "18616610153",
+        "fax": ""
+    },
+    "update": {
+        "remove": [
+            "public"
+        ]
+    }
+}
