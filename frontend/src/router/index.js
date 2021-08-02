@@ -1,25 +1,25 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import DeviceList from '../views/DeviceList.vue'
+import DeviceList from '../views/index.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    alias: '/devlist',
-    name: 'DevList',
+    alias: '/index',
+    name: 'index',
     component: DeviceList
   },
   {
     path: '/zddc',
-    name: 'ZDDC',
-    component: () => import(/* webpackChunkName: "about" */ '../views/ZDDC.vue')
+    name: 'zddc',
+    component: () => import('../views/zddc.vue')
   },
   {
     path: '/sddc',
-    name: 'SDDC',
-    component: () => import(/* webpackChunkName: "about" */ '../views/SDDC.vue')
+    name: 'sddc',
+    component: () => import('../views/sddc.vue')
   }
 ]
 

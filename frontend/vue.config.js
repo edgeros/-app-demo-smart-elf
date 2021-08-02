@@ -7,12 +7,12 @@
  * Author       : Fu Wenhao <fuwenhao@acoinfo>
  * Date         : 2021-07-26 14:59:59
  * LastEditors  : Fu Wenhao <fuwenhao@acoinfo>
- * LastEditTime : 2021-08-02 14:07:07
+ * LastEditTime : 2021-08-02 19:01:15
  */
 module.exports = {
   assetsDir: 'static',
   productionSourceMap: false,
-  outputDir: '../back/public',
+  outputDir: '../backend/public',
   devServer: {
     proxy: {
       '/api': {

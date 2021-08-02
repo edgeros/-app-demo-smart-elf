@@ -7,7 +7,7 @@
  * Author       : Fu Wenhao <fuwenhao@acoinfo>
  * Date         : 2021-07-28 14:15:37
  * LastEditors  : Fu Wenhao <fuwenhao@acoinfo>
- * LastEditTime : 2021-07-29 17:55:09
+ * LastEditTime : 2021-08-02 20:40:51
  */
 var deviceSer = require("../service/device_ser")
 var socket = require("../service/socket")
@@ -21,19 +21,18 @@ exports.devlist = async function (req, res) {
   try {
     // 获取设备列表
     let devList = await deviceSer.getDevlist();
-    let newDev = [];
+    let devInfos = [];
     // 获取设备详细信息
-    for (let i = 0; i < devList.length; i++) {
-      let dev = { ...devList[i] }
-      dev.info = await deviceSer.getDevlistInfo(devList[i])
-      newDev.push(dev)
+    for (let dev of devList) {
+      dev.info = await deviceSer.getDevlistInfo(dev)
+      devInfos.push(dev)
     }
-    res.send(newDev)
+    res.send(devInfos)
   } catch (error) {
-    console.log(error);
+    console.log(error)
     res.send({
       errorCode: -1,
-      msg: "获取失败"
+      msg: "请求失败"
     })
   }
 }
@@ -47,14 +46,11 @@ const openDevice = []
 exports.connect = async function (req, res) {
   try {
     let status = openDevice.find(item => {
-      return req.query.devId == item.devId
+      return req.query.devid == item.devid
     })
 
-    if (status) {
-      res.send("已打开");
-    } else {
-
-      let iotDev = await deviceSer.connectDevice(req.query.devId)
+    if (!status) {
+      let iotDev = await deviceSer.connectDevice(req.query.devid)
       // 监听人体红外感知器
       iotDev.on('message', function (msg) {
         console.log('iotDevice-message', JSON.stringify(msg));
@@ -64,19 +60,17 @@ exports.connect = async function (req, res) {
           socket.send('zddc', JSON.stringify(msg));
         }
       });
-
       openDevice.push({
-        devId: req.query.devId,
+        devid: req.query.devid,
         iotDev: iotDev
       })
-
-      res.send("success");
     }
+    res.send("success");
   } catch (err) {
     console.log('/api/connect', err);
     res.send({
       errorCode: -1,
-      msg: "获取失败"
+      msg: "请求失败"
     })
   }
 }
@@ -88,11 +82,10 @@ exports.connect = async function (req, res) {
 exports.disconnect = async function (req, res) {
   try {
     let idx = openDevice.findIndex(item => {
-      return req.query.devId == item.devId
+      return req.query.devid == item.devid
     })
     await deviceSer.disconnect(openDevice[idx].iotDev)
     openDevice.splice(idx, 1)
-    console.log(openDevice, "<<删除后的数组")
     res.send("success");
   } catch (err) {
     console.log(err)
@@ -105,17 +98,17 @@ exports.disconnect = async function (req, res) {
 exports.sendMsg = async function (req, res) {
   try {
     let iot = openDevice.find(item => {
-      return item.devId == req.body.data.devId
+      return item.devid == req.body.data.devid
     })
 
-    console.log(JSON.stringify(req.body), "===", iot.devId);
+    console.log(JSON.stringify(req.body), "->", iot.devid);
     await deviceSer.sendMsg(iot.iotDev, req.body.data.msg)
     res.send("success");
   } catch (err) {
     console.log(err)
     res.send({
       errorCode: -1,
-      msg: "处理失败"
+      msg: "请求失败"
     })
   }
 }

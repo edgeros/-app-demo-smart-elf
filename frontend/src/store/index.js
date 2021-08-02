@@ -16,9 +16,5 @@ export default new Vuex.Store({
     getDeviceCount(state) {
       return state.devlist.length
     }
-  },
-  actions: {
-  },
-  modules: {
   }
 })

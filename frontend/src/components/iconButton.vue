@@ -16,9 +16,8 @@
 </template>
 <script>
 export default {
-  props: ["images", "moduleName"],
-  methods: {},
-};
+  props: ['images', 'moduleName']
+}
 </script>
 
 <style scoped>
@@ -29,7 +28,9 @@ export default {
   margin: 0 auto;
   border-radius: 1rem;
   box-sizing: border-box; /* 解决 padding和width冲突  */
-  border: 1px solid #999;
+  border: 3px solid #999;
   text-align: center;
+  font-size: large;
+  font-weight: bold;
 }
 </style>

@@ -17,7 +17,7 @@ var bodyParser = require('middleware').bodyParser;
 // const sddc = require("./service/sddc_ser");
 /* Import routers */
 const myrouter = require('./routers/rest');
-const ioSocket = require('./service/socket');
+const socketIO = require('./service/socket');
 
 
 
@@ -25,7 +25,7 @@ const ioSocket = require('./service/socket');
 /* Create App */
 const app = WebApp.createApp();
 // 启动iosocketService
-ioSocket.startIo(app)
+socketIO.register(app)
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded());
 // parse application/json

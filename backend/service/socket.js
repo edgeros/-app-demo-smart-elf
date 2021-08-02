@@ -7,28 +7,31 @@
  * Author       : Fu Wenhao <fuwenhao@acoinfo>
  * Date         : 2021-07-28 17:08:42
  * LastEditors  : Fu Wenhao <fuwenhao@acoinfo>
- * LastEditTime : 2021-07-29 16:26:24
+ * LastEditTime : 2021-08-02 18:57:05
  */
 
 var io = require('socket.io');
 
 var socketio = null;
 var socketClient = [];
-// 启动iosocket
-exports.startIo = function (app) {
+
+/**
+ * 向server 注册websocket
+ * @param {*} app 
+ */
+exports.register = function (app) {
   socketio = io(
     app, {
     path: '/smart',
     serveClient: false,
     pingInterval: 10000,
-    pingTimeout: 5000
+    pingTimeout: 50
   }
   );
   socketio.on('connection', function (sockio) {
-    console.log("有客户端建立:", sockio.id);
     socketClient.push(sockio)
     sockio.on('message', (msg) => {
-      console.log("接收到消息", msg);
+      // 接收socket消息
     });
     sockio.on("disconnect", () => {
       closeSocket(sockio)
@@ -36,6 +39,10 @@ exports.startIo = function (app) {
   });
 }
 
+/**
+ * 关闭socket
+ * @param {*} sockio 
+ */
 function closeSocket(sockio) {
   let idx = socketClient.findIndex(item => {
     return sockio.id == item.id
@@ -43,7 +50,11 @@ function closeSocket(sockio) {
   socketClient.splice(idx, 1)
 }
 
-// sendMessage
+/**
+ * 发送消息
+ * @param {*} cmd 
+ * @param {*} value 
+ */
 exports.send = function (cmd, value) {
   socketClient.forEach(item => {
     item.emit(cmd, value);

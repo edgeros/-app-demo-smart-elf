@@ -7,7 +7,7 @@
  * Author       : Fu Wenhao <fuwenhao@acoinfo>
  * Date         : 2021-07-28 14:06:47
  * LastEditors  : Fu Wenhao <fuwenhao@acoinfo>
- * LastEditTime : 2021-07-29 17:49:53
+ * LastEditTime : 2021-08-02 17:56:56
  */
 
 var Device = require('device');
@@ -16,7 +16,7 @@ var Device = require('device');
  * 返回设备列表
  * @returns array 
  */
-function getDevlist() {
+exports.getDevlist = function () {
   return new Promise((resolve, reject) => {
     Device.list(false, function (error, list) {
       if (!error) {
@@ -31,7 +31,7 @@ function getDevlist() {
 /**
  * 获取设备详细信息
  */
-function getDevlistInfo(dev) {
+exports.getDevlistInfo = function (dev) {
   return new Promise((resolve, reject) => {
     Device.info(dev.devid, function (error, info) {
       if (error) {
@@ -48,7 +48,7 @@ function getDevlistInfo(dev) {
  * @param {*} id 
  * @return device object
  */
-function connectDevice(devid) {
+exports.connectDevice = function (devid) {
   return new Promise((resolve, reject) => {
     let iotDevice = new Device();
     iotDevice.request(devid, function (error) {
@@ -66,7 +66,7 @@ function connectDevice(devid) {
  * @param {*} dev 
  * @returns 
  */
-function sendMsg(dev, msg) {
+exports.sendMsg = function (dev, msg) {
   return new Promise((resolve, reject) => {
     dev.send(msg, function (error) {
       if (error) {
@@ -78,8 +78,12 @@ function sendMsg(dev, msg) {
   })
 }
 
-
-function disconnect(dev) {
+/**
+ * 断开设备连接
+ * @param {*} dev  
+ * @returns 
+ */
+exports.disconnect = function (dev) {
   return new Promise((resovle, reject) => {
     dev.release((error) => {
       if (error) {
@@ -89,12 +93,4 @@ function disconnect(dev) {
       }
     })
   })
-}
-
-module.exports = {
-  getDevlist: getDevlist,
-  getDevlistInfo: getDevlistInfo,
-  connectDevice: connectDevice,
-  disconnect: disconnect,
-  sendMsg: sendMsg
 }
