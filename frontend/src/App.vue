@@ -8,25 +8,6 @@
 body {
   background: #fff;
 }
-.page {
-  bottom: 50px;
-  padding-top: 0;
-}
-
-@supports (bottom: constant(safe-area-inset-bottom)) or
-  (bottom: env(safe-area-inset-bottom)) {
-  .page {
-    bottom: calc(50px); /* 兼容 iOS < 11.2 */
-    bottom: calc(50px); /* 兼容 iOS >= 11.2 */
-  }
-}
-@supports (padding-top: constant(safe-area-inset-top)) or
-  (padding-top: env(safe-area-inset-top)) {
-  .page {
-    padding-top: constant(safe-area-inset-top); /* 兼容 iOS < 11.2 */
-    padding-top: env(safe-area-inset-top); /* 兼容 iOS >= 11.2 */
-  }
-}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
