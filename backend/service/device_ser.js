@@ -1,20 +1,20 @@
 /**
  * Copyright (c) 2021 EdgerOS Team.
  * All rights reserved.
- * 
+ *
  * Detailed license information can be found in the LICENSE file.
- * 
+ *
  * Author       : Fu Wenhao <fuwenhao@acoinfo>
  * Date         : 2021-07-28 14:06:47
  * LastEditors  : Fu Wenhao <fuwenhao@acoinfo>
- * LastEditTime : 2021-08-02 17:56:56
+ * LastEditTime : 2021-08-03 11:16:57
  */
 
-var Device = require('device');
+const Device = require('device')
 
 /**
- * 返回设备列表
- * @returns array 
+ * get device list
+ * @returns array
  */
 exports.getDevlist = function () {
   return new Promise((resolve, reject) => {
@@ -24,12 +24,14 @@ exports.getDevlist = function () {
       } else {
         resolve([])
       }
-    });
+    })
   })
 }
 
 /**
- * 获取设备详细信息
+ * get devices info
+ * @param {*} dev
+ * @returns
  */
 exports.getDevlistInfo = function (dev) {
   return new Promise((resolve, reject) => {
@@ -44,52 +46,52 @@ exports.getDevlistInfo = function (dev) {
 }
 
 /**
- * 链接设备
- * @param {*} id 
+ * connect device
+ * @param {*} id
  * @return device object
  */
 exports.connectDevice = function (devid) {
   return new Promise((resolve, reject) => {
-    let iotDevice = new Device();
+    const iotDevice = new Device()
     iotDevice.request(devid, function (error) {
       if (error) {
-        reject(error.message);
+        reject(error.message)
       } else {
-        resolve(iotDevice);
+        resolve(iotDevice)
       }
-    });
+    })
   })
 }
 
 /**
- * 断开设备链接
- * @param {*} dev 
- * @returns 
+ * send message to device
+ * @param {*} dev
+ * @returns
  */
 exports.sendMsg = function (dev, msg) {
   return new Promise((resolve, reject) => {
     dev.send(msg, function (error) {
       if (error) {
-        reject(error.message);
+        reject(error.message)
       } else {
-        resolve('success');
+        resolve('success')
       }
-    }, 3);
+    }, 3)
   })
 }
 
 /**
- * 断开设备连接
- * @param {*} dev  
- * @returns 
+ * disconnect device
+ * @param {*} dev
+ * @returns
  */
 exports.disconnect = function (dev) {
-  return new Promise((resovle, reject) => {
+  return new Promise((resolve, reject) => {
     dev.release((error) => {
       if (error) {
         reject(error)
       } else {
-        resovle()
+        resolve('success')
       }
     })
   })

@@ -1,49 +1,49 @@
-/*
+/**
  * Copyright (c) 2021 EdgerOS Team.
  * All rights reserved.
  *
  * Detailed license information can be found in the LICENSE file.
  *
- * File: main.js.
- *
- * Author: hanhui@acoinfo.com
- *
+ * Author       : Fu Wenhao <fuwenhao@acoinfo>
+ * Date         : 2021-07-19 11:22:45
+ * LastEditors  : Fu Wenhao <fuwenhao@acoinfo>
+ * LastEditTime : 2021-08-03 11:26:48
  */
 
 /* Import system modules */
-const WebApp = require('webapp');
-var bodyParser = require('middleware').bodyParser;
+const WebApp = require('webapp')
+const bodyParser = require('middleware').bodyParser
 
-// const sddc = require("./service/sddc_ser");
 /* Import routers */
-const myrouter = require('./routers/rest');
-const socketIO = require('./service/socket');
-
-
-
+const myrouter = require('./routers/rest')
+/* Import socket */
+const socketIO = require('./service/socket')
 
 /* Create App */
-const app = WebApp.createApp();
-// 启动iosocketService
+const app = WebApp.createApp()
+
+/* Register Socket Server */
 socketIO.register(app)
-// parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded());
-// parse application/json
-app.use(bodyParser.json());
+
+/* parse application/x-www-form-urlencoded */
+app.use(bodyParser.urlencoded())
+
+/* parse application/json */
+app.use(bodyParser.json())
 
 /* Set static path */
-app.use(WebApp.static('./public'));
+app.use(WebApp.static('./public'))
 
 /* Set test rest */
-app.use('/api', myrouter);
+app.use('/api', myrouter)
 
 /* Rend test */
 app.get('/temp.html', function (req, res) {
-	res.render('temp', { time: Date.now() });
-});
-console.log("web启动");
+  res.render('temp', { time: Date.now() })
+})
+
 /* Start App */
-app.start();
+app.start()
 
 /* Event loop */
-require('iosched').forever();
+require('iosched').forever()
